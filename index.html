@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bajos de Haina - La Puerta del Sur</title>
+
+  <!-- Fuente -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #222;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: relative;
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
+      url('PORTADA.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-content {
+      max-width: 850px;
+      padding: 20px;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .hero-content h1 {
+      font-size: 4rem;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 30px;
+      background: #0077ff;
+      color: white;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .btn:hover {
+      background: #005dd1;
+      transform: translateY(-3px);
+    }
+
+    section {
+      padding: 80px 10%;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .title h2 {
+      font-size: 2.5rem;
+      color: #0f172a;
+      margin-bottom: 10px;
+    }
+
+    .title p {
+      color: #555;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: 0.4s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card-content h3 {
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .card-content p {
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      align-items: center;
+      gap: 40px;
+    }
+
+    .about img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .about-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #0f172a;
+    }
+
+    .about-text p {
+      line-height: 1.9;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .comments-section {
+      background: white;
+      border-radius: 25px;
+      padding: 40px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    footer {
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    footer p {
+      opacity: 0.8;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+
+      section {
+        padding: 60px 6%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FACEBOOK SDK -->
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v19.0">
+  </script>
+
+  <!-- HERO -->
+  <header>
+    <div class="hero-content">
+      <h1>Latino Haina RD</h1>
+      <p>
+        Descubre la belleza, historia y crecimiento de la puerta del sur.
+        Un espacio moderno donde la comunidad puede compartir opiniones,
+        experiencias y comentarios usando Facebook.
+      </p>
+
+      <a href="#comentarios" class="btn">Comentar Ahora</a>
+    </div>
+  </header>
+
+  <!-- GALERIA -->
+  <section>
+    <div class="title">
+      <h2>Galería de Haina</h2>
+      <p>
+        Imágenes representativas del municipio de Bajos de Haina y su desarrollo.
+      </p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <img src="haina.jpg" alt="Haina" />
+        <div class="card-content">
+          <h3>La Puerta del Sur</h3>
+          <p>
+            Bajos de Haina es uno de los municipios más importantes de la República Dominicana,
+            reconocido por su actividad industrial y portuaria.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="2.jpg" alt="Puerto de Haina" />
+        <div class="card-content">
+          <h3>Puerto de Haina</h3>
+          <p>
+            El puerto es un eje clave para el comercio nacional e internacional,
+            impulsando el crecimiento económico de la región.
+          </p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="6430393719bc4.png" alt="Monumento" />
+        <div class="card-content">
+          <h3>Cultura y Comunidad</h3>
+          <p>
+            Haina también representa tradición, orgullo patrio y una comunidad vibrante.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFORMACION -->
+  <section>
+    <div class="about">
+      <img src="PORTADA.jpg" alt="Vista aérea de Haina">
+
+      <div class="about-text">
+        <h2>Un Municipio en Desarrollo</h2>
+
+        <p>
+          Bajos de Haina continúa creciendo como una de las zonas estratégicas del país.
+          Su puerto, industrias y desarrollo urbano lo convierten en un punto importante
+          para la economía dominicana.
+        </p>
+
+        <p>
+          Esta página permite a los ciudadanos y visitantes interactuar mediante comentarios
+          utilizando sus cuentas de Facebook.
+        </p>
+
+        <a href="#comentarios" class="btn">Ir a los Comentarios</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMENTARIOS FACEBOOK -->
+  <section id="comentarios">
+    <div class="title">
+      <h2>Comentarios de la Comunidad</h2>
+       
+      <a href="https://www.youtube.com/">
+      <button   class="btn" id="button1">
+        
+    
+        Inicia sesión con Facebook y comparte tu opinión sobre Bajos de Haina.
+        
+      </button>
+      </a>
+       
+    </div>
+
+    <div class="comments-section">
+
+      <!-- IMPORTANTE -->
+      <!-- Cambia la URL por el dominio real donde publicarás tu página -->
+      <div class="fb-comments"
+           data-href="https://tusitio.com/haina"
+           data-width="100%"
+           data-numposts="10">
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      © 2025 Bajos de Haina - La Puerta del Sur | Diseño HTML5 + CSS3 + JavaScript
+    </p>
+  </footer>
+
+  <script>
+
+    const  button = document.getElementById("button1")
+
+    button.addEventListener("click", function(){
+        href = "https://www.wikipedia.org";
+      })
+        
+      
+
+      
+    
+
+    // Scroll suave
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // Animación simple al cargar tarjetas
+    const cards = document.querySelectorAll('.card');
+
+    window.addEventListener('scroll', () => {
+      cards.forEach(card => {
+        const position = card.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.2;
+
+        if (position < screenPosition) {
+          card.style.opacity = 1;
+          card.style.transform = 'translateY(0px)';
+        }
+      });
+    });
+
+    cards.forEach(card => {
+      card.style.opacity = 0;
+      card.style.transform = 'translateY(40px)';
+      card.style.transition = 'all 0.7s ease';
+    });
+  </script>
+
+</body>
+</html>
