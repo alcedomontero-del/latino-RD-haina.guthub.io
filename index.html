@@ -1,410 +1,413 @@
-<!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bajos de Haina - La Puerta del Sur</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bajos de Haina - La Puerta del Sur</title>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- Fuente -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
 
-    body {
-      background: #f4f7fb;
-      color: #222;
-      overflow-x: hidden;
-    }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
 
-    header {
-      position: relative;
-      height: 100vh;
-      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)),
-      url('PORTADA.jpg') center/cover no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
-    }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
 
-    .hero-content {
-      max-width: 850px;
-      padding: 20px;
-      animation: fadeIn 1.5s ease;
-    }
+        nav {
+            background: #0f3460;
+            padding: 1rem;
+            text-align: center;
+        }
 
-    .hero-content h1 {
-      font-size: 4rem;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
 
-    .hero-content p {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      margin-bottom: 25px;
-    }
+        nav a:hover {
+            background: #1a1a2e;
+        }
 
-    .btn {
-      display: inline-block;
-      padding: 14px 30px;
-      background: #0077ff;
-      color: white;
-      border-radius: 40px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
 
-    .btn:hover {
-      background: #005dd1;
-      transform: translateY(-3px);
-    }
+        .gallery-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-    section {
-      padding: 80px 10%;
-    }
+        .gallery-section h2 {
+            color: #0f3460;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
 
-    .title {
-      text-align: center;
-      margin-bottom: 60px;
-    }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
 
-    .title h2 {
-      font-size: 2.5rem;
-      color: #0f172a;
-      margin-bottom: 10px;
-    }
+        .gallery-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
 
-    .title p {
-      color: #555;
-      max-width: 700px;
-      margin: auto;
-    }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
 
-    .card {
-      background: white;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      transition: 0.4s;
-    }
+        .gallery-item .content {
+            padding: 1.5rem;
+        }
 
-    .card:hover {
-      transform: translateY(-10px);
-    }
+        .gallery-item h3 {
+            color: #0f3460;
+            margin-bottom: 0.5rem;
+        }
 
-    .card img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-    }
+        .gallery-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
 
-    .card-content {
-      padding: 20px;
-    }
+        .info-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-    .card-content h3 {
-      margin-bottom: 10px;
-      color: #0f172a;
-    }
+        .info-section h2 {
+            color: #0f3460;
+            margin-bottom: 1rem;
+        }
 
-    .card-content p {
-      color: #555;
-      line-height: 1.7;
-    }
+        .btn {
+            display: inline-block;
+            background: #0f3460;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: background 0.3s;
+        }
 
-    .about {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      align-items: center;
-      gap: 40px;
-    }
+        .btn:hover {
+            background: #1a1a2e;
+        }
 
-    .about img {
-      width: 100%;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    }
+        /* Sección de comentarios */
+        .comments-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
 
-    .about-text h2 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #0f172a;
-    }
+        .comments-section h2 {
+            color: #0f3460;
+            margin-bottom: 1.5rem;
+        }
 
-    .about-text p {
-      line-height: 1.9;
-      color: #444;
-      margin-bottom: 20px;
-    }
+        .comment-form {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
 
-    .comments-section {
-      background: white;
-      border-radius: 25px;
-      padding: 40px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    }
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
 
-    footer {
-      background: #0f172a;
-      color: white;
-      text-align: center;
-      padding: 25px;
-    }
+        .comment-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
 
-    footer p {
-      opacity: 0.8;
-    }
+        .comment-form button {
+            background: #0f3460;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        .comment-form button:hover {
+            background: #1a1a2e;
+        }
 
-    @media (max-width: 768px) {
-      .hero-content h1 {
-        font-size: 2.5rem;
-      }
+        .comment {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #0f3460;
+        }
 
-      .hero-content p {
-        font-size: 1rem;
-      }
+        .comment .author {
+            font-weight: bold;
+            color: #0f3460;
+            margin-bottom: 0.3rem;
+        }
 
-      section {
-        padding: 60px 6%;
-      }
-    }
-  </style>
+        .comment .date {
+            font-size: 0.85rem;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment .message {
+            color: #555;
+        }
+
+        footer {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+    <header>
+        <h1>Bajos de Haina</h1>
+        <p>La Puerta del Sur</p>
+    </header>
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyB-3lIL0gK3vzwIlMZNLfDo_5w02JY2rQE",
-    authDomain: "comentarios1-c473f.firebaseapp.com",
-    projectId: "comentarios1-c473f",
-    storageBucket: "comentarios1-c473f.firebasestorage.app",
-    messagingSenderId: "339229143465",
-    appId: "1:339229143465:web:ca22235af7de8aa29914b8",
-    measurementId: "G-LHNT548HVV"
-  };
+    <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#galeria">Galería</a>
+        <a href="#informacion">Información</a>
+        <a href="#comentarios">Comentarios</a>
+    </nav>
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
- <video src="ddd.mp4" controls></video>
+    <div class="container">
+        <!-- Sección de Galería -->
+        <section id="galeria" class="gallery-section">
+            <h2>Galería de Haina</h2>
+            <p>Imágenes representativas del municipio de Bajos de Haina y su desarrollo.</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/400x200/0f3460/ffffff?text=Puerta+del+Sur" alt="La Puerta del Sur">
+                    <div class="content">
+                        <h3>La Puerta del Sur</h3>
+                        <p>Bajos de Haina es uno de los municipios más importantes de la República Dominicana, reconocido por su actividad industrial y portuaria.</p>
+                    </div>
+                </div>
 
-  <!-- Video 1 -->
-  <div id="video1">
-    <video src="video1.mp4" controls></video>
-    <div id="disqus_thread_video1"></div>
-  </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/400x200/16213e/ffffff?text=Puerto+de+Haina" alt="Puerto de Haina">
+                    <div class="content">
+                        <h3>Puerto de Haina</h3>
+                        <p>El puerto es un eje clave para el comercio nacional e internacional, impulsando el crecimiento económico de la región.</p>
+                    </div>
+                </div>
 
-  <!-- Video 2 -->
-  <div id="video2">
-    <video src="video2.mp4" controls></video>
-    <div id="disqus_thread_video2"></div>
-  </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/400x200/1a1a2e/ffffff?text=Cultura+y+Comunidad" alt="Cultura y Comunidad">
+                    <div class="content">
+                        <h3>Cultura y Comunidad</h3>
+                        <p>Haina también representa tradición, orgullo patrio y una comunidad vibrante.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <!-- Sección de Información -->
+        <section id="informacion" class="info-section">
+            <h2>Un Municipio en Desarrollo</h2>
+            <p>Bajos de Haina continúa creciendo como una de las zonas estratégicas del país. Su puerto, industrias y desarrollo urbano lo convierten en un punto importante para la economía dominicana.</p>
+            <p>Esta página permite a los ciudadanos y visitantes interactuar mediante comentarios.</p>
+            <a href="#comentarios" class="btn">Ir a los Comentarios</a>
+        </section>
 
-  <!-- FACEBOOK SDK -->
- <div id="disqus_thread"></div>
+        <!-- Sección de Comentarios con Firebase -->
+        <section id="comentarios" class="comments-section">
+            <h2>Comentarios de la Comunidad</h2>
+            
+            <!-- Formulario de comentarios -->
+            <div class="comment-form">
+                <h3>Deja tu comentario</h3>
+                <input type="text" id="commentName" placeholder="Tu nombre" required>
+                <textarea id="commentMessage" placeholder="Escribe tu mensaje..." required></textarea>
+                <button onclick="addComment()">Enviar comentario</button>
+            </div>
+
+            <!-- Contenedor de comentarios -->
+            <div id="commentsContainer">
+                <p>Cargando comentarios...</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 Bajos de Haina - La Puerta del Sur | Diseño HTML5 + CSS3 + JavaScript + Firebase</p>
+    </footer>
+
     <script>
-        var disqus_config = function () {
-            this.page.url = 'https://alcedomontero-del.github.io/latino-RD-haina.guthub.io/'; 
-            this.page.identifier = 'latino-rd-haina-original'; 
+        // Configuración de Firebase (REEMPLAZA ESTOS VALORES CON LOS TUYOS)
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY",
+            authDomain: "TU_PROJECT.firebaseapp.com",
+            projectId: "TU_PROJECT_ID",
+            storageBucket: "TU_PROJECT.appspot.com",
+            messagingSenderId: "TU_SENDER_ID",
+            appId: "TU_APP_ID"
         };
-        (function() { 
-            var d = document, s = d.createElement('script');
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Función para agregar un comentario
+        async function addComment() {
+            const nameInput = document.getElementById('commentName');
+            const messageInput = document.getElementById('commentMessage');
             
-            // Aquí ya pusimos tu shortname real (amm-3)
-            s.src = 'https://amm-3.disqus.com/embed.js';
-            
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
+            const name = nameInput.value.trim();
+            const message = messageInput.value.trim();
 
-  <!-- GALERIA -->
-  <section>
-    <div class="title">
-      <h2>Galería de Haina</h2>
-      <p>
-        Imágenes representativas del municipio de Bajos de Haina y su desarrollo.
-      </p>
-    </div>
+            if (!name || !message) {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
 
-    <div class="grid">
-      <div class="card">
-        <img src="haina.jpg" alt="Haina" />
-        <div class="card-content">
-          <h3>La Puerta del Sur</h3>
-          <p>
-            Bajos de Haina es uno de los municipios más importantes de la República Dominicana,
-            reconocido por su actividad industrial y portuaria.
-          </p>
-        </div>
-      </div>
+            try {
+                await db.collection('comentarios').add({
+                    nombre: name,
+                    mensaje: message,
+                    fecha: new Date().toISOString()
+                });
 
-      <div class="card">
-        <img src="2.jpg" alt="Puerto de Haina" />
-        <div class="card-content">
-          <h3>Puerto de Haina</h3>
-          <p>
-            El puerto es un eje clave para el comercio nacional e internacional,
-            impulsando el crecimiento económico de la región.
-          </p>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="6430393719bc4.png" alt="Monumento" />
-        <div class="card-content">
-          <h3>Cultura y Comunidad</h3>
-          <p>
-            Haina también representa tradición, orgullo patrio y una comunidad vibrante.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- INFORMACION -->
-  <section>
-    <div class="about">
-      <img src="PORTADA.jpg" alt="Vista aérea de Haina">
-
-      <div class="about-text">
-        <h2>Un Municipio en Desarrollo</h2>
-
-        <p>
-          Bajos de Haina continúa creciendo como una de las zonas estratégicas del país.
-          Su puerto, industrias y desarrollo urbano lo convierten en un punto importante
-          para la economía dominicana.
-        </p>
-
-        <p>
-          Esta página permite a los ciudadanos y visitantes interactuar mediante comentarios
-          utilizando sus cuentas de Facebook.
-        </p>
-
-        <a href="#comentarios" class="btn">Ir a los Comentarios</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMENTARIOS FACEBOOK -->
-  <section id="comentarios">
-    <div class="title">
-      <h2>Comentarios de la Comunidad</h2>
-       
-      <a href="https://www.youtube.com/">
-      <button   class="btn" id="button1">
-        
-    
-        Inicia sesión con Facebook y comparte tu opinión sobre Bajos de Haina.
-        
-      </button>
-      </a>
-       
-    </div>
-
-    <div class="comments-section">
-
-      <!-- IMPORTANTE -->
-      <!-- Cambia la URL por el dominio real donde publicarás tu página -->
-      <div class="fb-comments"
-           data-href="https://tusitio.com/haina"
-           data-width="100%"
-           data-numposts="10">
-      </div>
-
-    </div>
-  </section>
-
-  <footer>
-    <p>
-      © 2025 Bajos de Haina - La Puerta del Sur | Diseño HTML5 + CSS3 + JavaScript
-    </p>
-  </footer>
-
-  <script>
-
-    const  button = document.getElementById("button1")
-
-    button.addEventListener("click", function(){
-        href = "https://www.wikipedia.org";
-      })
-        
-      
-
-      
-    
-
-    // Scroll suave
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
-
-    // Animación simple al cargar tarjetas
-    const cards = document.querySelectorAll('.card');
-
-    window.addEventListener('scroll', () => {
-      cards.forEach(card => {
-        const position = card.getBoundingClientRect().top;
-        const screenPosition = window.innerHeight / 1.2;
-
-        if (position < screenPosition) {
-          card.style.opacity = 1;
-          card.style.transform = 'translateY(0px)';
+                // Limpiar formulario
+                nameInput.value = '';
+                messageInput.value = '';
+                
+                // Recargar comentarios
+                loadComments();
+            } catch (error) {
+                console.error('Error al agregar comentario:', error);
+                alert('Error al enviar el comentario. Intenta de nuevo.');
+            }
         }
-      });
-    });
 
-    cards.forEach(card => {
-      card.style.opacity = 0;
-      card.style.transform = 'translateY(40px)';
-      card.style.transition = 'all 0.7s ease';
-    });
-  </script>
+        // Función para cargar comentarios en tiempo real
+        function loadComments() {
+            const commentsContainer = document.getElementById('commentsContainer');
+            
+            db.collection('comentarios')
+                .orderBy('fecha', 'desc')
+                .onSnapshot((snapshot) => {
+                    commentsContainer.innerHTML = '';
+                    
+                    if (snapshot.empty) {
+                        commentsContainer.innerHTML = '<p>No hay comentarios aún. ¡Sé el primero en comentar!</p>';
+                        return;
+                    }
 
+                    snapshot.forEach((doc) => {
+                        const comment = doc.data();
+                        const commentElement = document.createElement('div');
+                        commentElement.className = 'comment';
+                        
+                        const fecha = new Date(comment.fecha);
+                        const fechaFormateada = fecha.toLocaleDateString('es-ES', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+
+                        commentElement.innerHTML = `
+                            <div class="author">${comment.nombre}</div>
+                            <div class="date">${fechaFormateada}</div>
+                            <div class="message">${comment.mensaje}</div>
+                        `;
+                        
+                        commentsContainer.appendChild(commentElement);
+                    });
+                }, (error) => {
+                    console.error('Error al cargar comentarios:', error);
+                    commentsContainer.innerHTML = '<p>Error al cargar los comentarios. Verifica tu conexión a Firebase.</p>';
+                });
+        }
+
+        // Cargar comentarios al iniciar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            loadComments();
+        });
+    </script>
 </body>
 </html>
+🔧 Instrucciones para configurar Firebase:
