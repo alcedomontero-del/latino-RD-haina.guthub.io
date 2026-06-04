@@ -201,6 +201,29 @@
   </style>
 </head>
 <body>
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyB-3lIL0gK3vzwIlMZNLfDo_5w02JY2rQE",
+    authDomain: "comentarios1-c473f.firebaseapp.com",
+    projectId: "comentarios1-c473f",
+    storageBucket: "comentarios1-c473f.firebasestorage.app",
+    messagingSenderId: "339229143465",
+    appId: "1:339229143465:web:ca22235af7de8aa29914b8",
+    measurementId: "G-LHNT548HVV"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
  <video src="ddd.mp4" controls></video>
 
   <!-- Video 1 -->
